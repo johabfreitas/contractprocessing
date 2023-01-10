@@ -2,6 +2,7 @@ package model.entities;
 
 import java.time.LocalDate;
 
+
 public class Installment {
 
     private LocalDate dueDate;
