@@ -16,7 +16,7 @@ public class Program {
         Locale.setDefault(Locale.US);
         Scanner sc = new Scanner(System.in);
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        
+
         System.out.println("Entre os dados do contrato:");
         System.out.print("Numero: ");
         int number = sc.nextInt();
@@ -24,21 +24,22 @@ public class Program {
         LocalDate date = LocalDate.parse(sc.next(), fmt);
         System.out.print("Valor do contrato: ");
         double totalValue = sc.nextDouble();
+
+        Contract obj = new Contract(number, date, totalValue);
+
         System.out.print("Entre com o numero de parcelas: ");
-        int installment = sc.nextInt();
-        
-        Contract obj = new Contract(number, date, totalValue, new Installment());
-        
-        ContractService service = new ContractService();
-        
-        service.processContract(obj, installment);
-        
-        
+        int n = sc.nextInt();
+
+        ContractService service = new ContractService(null);
+
+        service.processContract(obj, n);
+
         System.out.println("Parcelas:");
-        
-       
-        
+        for (Installment installment : obj.getInstallments()) {
+            System.out.println(installment);
+        }
+
         sc.close();
     }
-    
+
 }
