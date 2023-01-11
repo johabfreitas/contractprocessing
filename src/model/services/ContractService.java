@@ -11,22 +11,24 @@ public class ContractService{
     
     private Contract contract;
 
-    public ContractService(){
-    }
-    
-
     public ContractService(OnlinePaymentService onlinePaymentService) {
         this.onlinePaymentService = onlinePaymentService;
     }
     
     
     public void processContract(Contract contract, int months){
-        /*
-        double valueInstallment = contract.getTotalValue() / months;
-        System.out.println(valueInstallment); */
         
-        contract.getInstallments().add(new Installment(LocalDate.of(2018, 7, 25), 206.04));
-        contract.getInstallments().add(new Installment(LocalDate.of(2018, 8, 25), 208.08));
+        double valueInstallment = contract.getTotalValue() / months;
+        
+        for(int i = 1; i <= months; i++){
+            LocalDate dueDate = contract.getDate().plusMonths(i);
+            
+            double interest = onlinePaymentService.interest(valueInstallment, i);
+            double fee = onlinePaymentService.paymentFee(valueInstallment + interest);            
+            double quota = valueInstallment + interest + fee;
+            
+            contract.getInstallments().add(new Installment(dueDate, quota));
+        }
     }
 
     
