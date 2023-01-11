@@ -7,7 +7,6 @@ import java.util.Scanner;
 import model.entities.Contract;
 import model.entities.Installment;
 import model.services.ContractService;
-import model.services.OnlinePaymentService;
 import model.services.PaypalService;
 
 public class Program {
@@ -30,13 +29,16 @@ public class Program {
         System.out.print("Entre com o numero de parcelas: ");
         int n = sc.nextInt();
 
-        ContractService service = new ContractService(null);
+        ContractService service = new ContractService(new PaypalService());
 
         service.processContract(obj, n);
 
         System.out.println("Parcelas:");
+        int count = 0;
         for (Installment installment : obj.getInstallments()) {
-            System.out.println(installment);
+            count++;
+            System.out.println(count + "ª Parcela " + ": " + installment);
+            
         }
 
         sc.close();

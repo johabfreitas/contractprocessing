@@ -37,7 +37,7 @@ public class Installment {
 
     @Override
     public String toString() {
-        return dueDate.format(fmt) + " - " + String.format("%.2f", amount);
+        return dueDate.format(fmt) + " - " + String.format("R$ %.2f", amount);
     }
     
     
